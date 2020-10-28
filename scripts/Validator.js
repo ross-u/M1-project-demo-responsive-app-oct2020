@@ -1,13 +1,12 @@
 "use strict";
-<<<<<<< HEAD
 
 class Validator {
   constructor() {
     // predetermined error messages
-    this.invalidEmailError = "Intorduce un email válido";
-    this.emailExistsError = "Este email ya está registrado";
-    this.passwordError = "Introduce una contraseña de 6 o más carácteres";
-    this.repeatPasswordError = "Los campos no coinciden";
+    this.invalidEmailError = "Enter a valid email address.";
+    this.emailExistsError = "The entered email address is already taken.";
+    this.passwordError = "Password must be at least 6 characters long.";
+    this.repeatPasswordError = "Password and repeat password don't match.";
 
     // object with errors that are shown to the user on error
     this.errors = {
@@ -102,5 +101,3 @@ class Validator {
 }
 
 const validator = new Validator();
-=======
->>>>>>> m1-prep-oct2020
