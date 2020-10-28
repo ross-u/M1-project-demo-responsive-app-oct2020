@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class Login {
   constructor() {
@@ -9,7 +9,7 @@ class Login {
     this.messageContainer = document.querySelector(".message-container");
   }
 
-  // gestionar el envio de los datos (evento "submit")
+  // handle the sending of the data (on "submit" event)
   submit = (event) => {
     event.preventDefault();
 
@@ -18,46 +18,42 @@ class Login {
     const email = this.emailInput.value;
     const password = this.passwordInput.value;
 
-    // Intentar encontrar el usuario
-    const user = usersDB.find( (userObj) => {
+    // Try to find the user that mathches the `email` and the `password`
+    const user = usersDB.find((userObj) => {
       if (userObj.email === email && userObj.password === password) {
         return true;
       }
-    })
-
+    });
 
     this.showMessage(user);
-  }
+  };
 
-  // mostrar el mensaje de error o mensaje de exito
+  // show the error or success message
   showMessage = (user) => {
-    // eliminar el mensaje previo
+    // remove the previous message
     this.messageContainer.innerHTML = "";
 
-    const message = document.createElement('p');
+    const message = document.createElement("p");
 
     if (user) {
-      // si el usuario inicia la sesion con exito
-      // agrega la clase para cambiar el color y sobrescribir el estilo anterior
+      // if the log in was successful
+      // add the class name to change the color and overwrite the previous style
       message.innerHTML = `hola, ${user.email}`;
       message.classList.add("correct-message");
-    }
-    else {
-      // si el inicio de sesión no se ha realizado correctamente
-      message.innerHTML = 'el email o/y password son incorectos';
+    } else {
+      // if the log in was unsuccessful
+      message.innerHTML = "el email o/y password son incorectos";
     }
 
     this.messageContainer.appendChild(message);
 
     if (user) this.redirect();
-  }
+  };
 
   redirect = () => {
-    setTimeout( ()=> location.assign('dashboard.html'), 2000);
-  }
-
+    setTimeout(() => location.assign("dashboard.html"), 2000);
+  };
 }
-
 
 const login = new Login();
 

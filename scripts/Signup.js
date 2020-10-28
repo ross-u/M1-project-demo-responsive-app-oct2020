@@ -1,8 +1,7 @@
-'use strict';
-
+"use strict";
 
 class Signup {
-  constructor () {
+  constructor() {
     this.nameInput = document.querySelector("#name");
     this.pokemonInput = document.querySelector("#pokemon");
     this.typeInput = document.querySelector("#type");
@@ -12,68 +11,67 @@ class Signup {
 
     this.buttonInput = document.querySelector("#signup-button");
     this.errorsWrapper = document.querySelector(".message-container");
-
   }
 
-
-  // gestionar cambios del input "email"
+  // Handle the "email" input changes
   handleEmailInput = (event) => {
     const email = event.target.value;
 
-    // validar el texto del input email
+    // validate the text from the "email" input field
     validator.validateValidEmail(email);
 
     const errors = validator.getErrors();
 
-    // si el nombre del email es valido
+    // if the email structure is valid (it has @, it has a domain like .com , .eu ...)
     if (!errors.invalidEmailError) {
-      // comprueba si el email es unico
+      // check if the email is unique (it doesn't exists yet)
       validator.validateUniqueEmail(email);
     }
 
     this.setErrorMessages();
 
-    // comprobar si hay errores, si no hay errores activa el boton Sign up (disabled = false)
+    // check if there are any errors, if there is are errors activate the Signup button ( disabled = false)
     this.checkButton();
-  }
+  };
 
-  // gestionar cambios del input "password"
+  // Handle the "password" input changes
   handlePasswordInput = (event) => {
     const password = event.target.value;
     const passwordRepeat = this.repeatPasswordInput.value;
 
-
-    // validar el texto del input password
+    // validate the text from the "password" input field
     validator.validatePassword(password);
     validator.validatePasswordRepeat(password, passwordRepeat);
 
     this.setErrorMessages();
 
-    // comprobar si hay errores, si no hay errores activa el boton Sign up (disabled = false)
+    // check if there are any errors. If there are no errors activate the Signup button ( disabled = false)
     this.checkButton();
-  }
+  };
 
-  // gestionar cambios del input "repeat-password"
+  // Handle the "repeat-password" input changes
   handleRepeatPasswordInput = (event) => {
     const passwordRepeat = event.target.value;
     const password = this.passwordInput.value;
 
-    // validar el texto del input password
-    // validar el texto del input repeatPassword
+    // validate the text from the "password" input field
+    // validate the text from the "repeat-password" input field
     validator.validatePassword(password);
     validator.validatePasswordRepeat(password, passwordRepeat);
 
     this.setErrorMessages();
 
-    // comprobar si hay errores, si no hay errores activa el boton Sign up (disabled = false)
+    // check if there are any errors. If there are no errors activate the Signup button ( disabled = false)
     this.checkButton();
-  }
+  };
 
-  // gestionar el envio de los datos (submit)
+  // Handle the submission of the form data (on "submit")
   saveData = (event) => {
-    // Cuando el evento ocurre, cancelalo y no recargue la pagina
+    // When the form "submit" event occurs we have to cancel it,
+    // so that it doesn't reload the page
     event.preventDefault();
-    // recoger los valores de cada input
+
+    // get the values from all of the inputs
     const name = this.nameInput.value;
     const pokemon = this.pokemonInput.value;
     const type = this.typeInput.value;
@@ -83,12 +81,10 @@ class Signup {
 
     const newUser = new User(name, pokemon, type, email, password);
 
-    // guardar el nuevo usuario en la base de datos ( simulada :D )
-    db.saveNewUser( newUser );
+    // save the new user in the database (fake database :D )
+    db.saveNewUser(newUser);
 
-
-
-    // vaciar el form
+    // empty the form
     this.nameInput.value = "";
     this.pokemonInput.value = "";
     this.typeInput.value = "";
@@ -99,84 +95,81 @@ class Signup {
     this.showSuccessMessage();
     this.removeMessages();
 
-    // reiniciar los errores del `validator`
+    // reset the validator errors
     validator.resetValidator();
-    // desactivar el botón Sign Up de nuevo
+    // disable the Signup button
     this.buttonInput.disabled = true;
-  }
+  };
 
-  // registarar funciones para cada input/campo
+  // Register the event listeners for all of the input fields
   addListeners = () => {
-    // escucha para los cambios de texto
-    this.emailInput.addEventListener("input", this.handleEmailInput );
+    // listen for the text updates on the input field
+    this.emailInput.addEventListener("input", this.handleEmailInput);
     this.passwordInput.addEventListener("input", this.handlePasswordInput);
-    this.repeatPasswordInput.addEventListener("input", this.handleRepeatPasswordInput);
+    this.repeatPasswordInput.addEventListener(
+      "input",
+      this.handleRepeatPasswordInput
+    );
 
     this.buttonInput.addEventListener("click", this.saveData);
-
-  }
+  };
 
   showSuccessMessage = () => {
-    // vacia los errores para que no se sumen
+    // empty the error messages wrapper, so that errors are not adding up
     this.errorsWrapper.innerHTML = "";
 
     const errorsObj = validator.getErrors();
-    // convertir el objeto a un array de strings
+    // convert the errors object into an array of strings
     const errorsStringsArr = Object.values(errorsObj);
 
     if (errorsStringsArr.length > 1) {
       return;
     }
 
-    const successMessageP = document.createElement('p');
+    const successMessageP = document.createElement("p");
     successMessageP.innerHTML = "La cuenta ha sido creada con exito";
 
     this.errorsWrapper.appendChild(successMessageP);
+  };
 
-  }
-
-  
-  // activar o desactivar el botón de envio (Sign Up)
+  // enable or disable the Sign Up button
   checkButton = () => {
     const errorsObj = validator.getErrors();
     const errorsArr = Object.values(errorsObj);
-    
 
-    if(errorsArr.length > 0) {
+    if (errorsArr.length > 0) {
       this.buttonInput.disabled = true;
-    }
-    else {
+    } else {
       this.buttonInput.disabled = false;
     }
-  }
+  };
 
   removeMessages = () => {
-    setTimeout( () => {
+    setTimeout(() => {
       this.errorsWrapper.innerHTML = "";
-    }, 2000)
-  }
-
+    }, 2000);
+  };
 
   setErrorMessages = () => {
-    // vacia los errores para que no se sumen
+    // empty the error messages wrapper, so that errors are not adding up
+
     this.errorsWrapper.innerHTML = "";
-    
+
     const errorsObj = validator.getErrors();
 
-    // convertir el objeto a un array de strings
+    // convert the errors object into an array of strings
     const errorsStringsArr = Object.values(errorsObj);
 
-    errorsStringsArr.forEach( (errorStr) => {
-      const errorMessageP = document.createElement('p');
+    errorsStringsArr.forEach((errorStr) => {
+      const errorMessageP = document.createElement("p");
       errorMessageP.innerHTML = errorStr;
 
       this.errorsWrapper.appendChild(errorMessageP);
-    })
-
-  }
+    });
+  };
 }
 
-// crear una nueva instanica del Signup (objeto)
+// create a new instance of the Signup object
 const signup = new Signup();
 
-window.addEventListener("load", signup.addListeners );
+window.addEventListener("load", signup.addListeners);

@@ -1,108 +1,103 @@
-'use strict';
-
+"use strict";
 
 class Validator {
   constructor() {
-    // mensajes predeterminados
-    this.invalidEmailError = 'Intorduce un email válido';
-    this.emailExistsError = 'Este email ya está registrado';
-    this.passwordError = 'Introduce una contraseña de 6 o más carácteres';
-    this.repeatPasswordError = 'Los campos no coinciden';
+    // predetermined (hard coded) error messages
+    this.invalidEmailError = "Intorduce un email válido";
+    this.emailExistsError = "Este email ya está registrado";
+    this.passwordError = "Introduce una contraseña de 6 o más carácteres";
+    this.repeatPasswordError = "Los campos no coinciden";
 
-    // objeto con los errores que vamos a mostrar al usuario
+    // object with errors that are shown to the user on error
     this.errors = {
       invalidEmailError: this.invalidEmailError,
       passwordError: this.passwordError,
-      repeatPasswordError: this.repeatPasswordError
-    }
+      repeatPasswordError: this.repeatPasswordError,
+    };
   }
 
-    // validar el nombre del email
-    validateValidEmail = (email) => {
-      // si el email es valido, quita el mensaje de error
-      if (this.emailIsValid(email)) {
-        delete this.errors.invalidEmailError;
-      }
-      else {
-        // si el email no es valido, poner el mensaje que se mostrara
-        this.errors.invalidEmailError = this.invalidEmailError;
-      }
+  // validate the email
+  validateValidEmail = (email) => {
+    // if the email is valid, remove that error message
+    if (this.emailIsValid(email)) {
+      delete this.errors.invalidEmailError;
+    } else {
+      // if the email is not valid, set the error message that will be shown
+      this.errors.invalidEmailError = this.invalidEmailError;
     }
+  };
 
-    // funcion auxiliar de `validateEmail`
-    emailIsValid = (email) => {
-      // RegEx objeto special - contiene las reglas de la sintaxis
-      const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
-      
-      // metodo `test` prueba si la cadena cumple las reglas
-      // y devuelve `true` o `false`
-      const isValid = emailRegEx.test(email);
-      
-      return isValid;      
-    }
-    
-    // validar que el email no esta tomado (es unico)
-    validateUniqueEmail = (newEmail) => {
-      const usersDB = db.getAllUsers();
+  // helper functon of `validateEmail`
+  emailIsValid = (email) => {
+    // RegEx object - contains the regex pattern to test if the email is valid
+    const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
 
-      let emailUnique = true;
+    // RegEx.test method is used to check if the string fulfills the rules of the pattern
+    // it returns `ture` or `false`
+    const isValid = emailRegEx.test(email);
 
-      if(usersDB.length > 0) {
-        usersDB.forEach( (userObj) => {
-          // si el email ya esta tomado, cambia el valior de la variable a `false`
-          if (userObj.email === newEmail ) {
-            emailUnique = false;
-          }
-        })
+    return isValid;
+  };
 
-        if (emailUnique) {
-          // quita el mensaje de error
-          delete this.errors.emailExistsError;
-        } else {
-          // si el email no es unico, poner el mensaje de nuevo
-          this.errors.emailExistsError = this.emailExistsError
+  // validate that the email is unique (it isn't already taken)
+  validateUniqueEmail = (newEmail) => {
+    const usersDB = db.getAllUsers();
+
+    let emailUnique = true;
+
+    if (usersDB.length > 0) {
+      usersDB.forEach((userObj) => {
+        // if the email is already taken, change the value of the flag variable to `false`
+        if (userObj.email === newEmail) {
+          emailUnique = false;
         }
+      });
 
+      if (emailUnique) {
+        // remove the error message
+        delete this.errors.emailExistsError;
+      } else {
+        // if the email is not unique, set the error message
+        this.errors.emailExistsError = this.emailExistsError;
       }
     }
+  };
 
-    // validar la longitud del password
-    validatePassword = (password) => {
-      if (password.length > 5) {
-        // quita el mensaje de error
-        delete this.errors.passwordError;
-      }
-      else {
-        // si el password tiene menos de 5 caracteres, poner el mensaje
-        this.errors.passwordError = this.passwordError;
-      }
+  // validate the password length
+  validatePassword = (password) => {
+    if (password.length > 5) {
+      // remove the error message
+      delete this.errors.passwordError;
+    } else {
+      // if the password has less than 5 characters, set the error message
+      this.errors.passwordError = this.passwordError;
     }
+  };
 
-    // validar si el password y el repeat-password coinciden
-    validatePasswordRepeat = (password, passwordRepeat) => {
-      if (password === passwordRepeat) {
-        // si los 2 passwords coinciden, quita el error
-        delete this.errors.repeatPasswordError;
-      }
-      else {
-        // si no coinciden, poner el mensaje
-        this.errors.repeatPasswordError = this.repeatPasswordError;
-      }
+  // validate if the password and the repeat-password are the same
+  validatePasswordRepeat = (password, passwordRepeat) => {
+    if (password === passwordRepeat) {
+      // if the 2 passwords match, remove the error
+      delete this.errors.repeatPasswordError;
+    } else {
+      // if the passwords don't match, set the error message
+      this.errors.repeatPasswordError = this.repeatPasswordError;
     }
+  };
 
-    // obtener el objeto con errors, para mostrarlos al usuario en la pagina Signup
-    getErrors = () => {
-      return this.errors;
-    }
+  // get the error object, for showing it to the user on the Signup page
+  getErrors = () => {
+    return this.errors;
+  };
 
-    // reiniciar los errores mostrados, para el proximo Signup
-    resetValidator = () => {
-      this.errors = {
-        invalidEmailError: this.invalidEmailError,
-        passwordError: this.passwordError,
-        repeatPasswordError: this.repeatPasswordError
-      }
-    }
+  // reset the errors, for the next signup
+  resetValidator = () => {
+    this.errors = {
+      invalidEmailError: this.invalidEmailError,
+      passwordError: this.passwordError,
+      repeatPasswordError: this.repeatPasswordError,
+    };
+  };
 }
 
 const validator = new Validator();
