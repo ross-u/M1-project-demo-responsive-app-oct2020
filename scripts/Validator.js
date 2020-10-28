@@ -1,4 +1,5 @@
 "use strict";
+<<<<<<< HEAD
 
 class Validator {
   constructor() {
@@ -101,3 +102,5 @@ class Validator {
 }
 
 const validator = new Validator();
+=======
+>>>>>>> m1-prep-oct2020

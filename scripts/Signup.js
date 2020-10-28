@@ -1,4 +1,5 @@
 "use strict";
+<<<<<<< HEAD
 
 class Signup {
   constructor() {
@@ -174,3 +175,5 @@ class Signup {
 const signup = new Signup();
 
 window.addEventListener("load", signup.addListeners);
+=======
+>>>>>>> m1-prep-oct2020
