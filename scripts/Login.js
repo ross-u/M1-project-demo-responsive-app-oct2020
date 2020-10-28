@@ -19,6 +19,8 @@ class Login {
     const password = this.passwordInput.value;
 
     // Try to find the user that mathches the `email` and the `password`
+    // `find` returns the first element which mathces the expression
+    //  (first time `true` is returned in the loop)
     const user = usersDB.find((userObj) => {
       if (userObj.email === email && userObj.password === password) {
         return true;
@@ -38,11 +40,11 @@ class Login {
     if (user) {
       // if the log in was successful
       // add the class name to change the color and overwrite the previous style
-      message.innerHTML = `hola, ${user.email}`;
+      message.innerHTML = `Hello, ${user.email}`;
       message.classList.add("correct-message");
     } else {
       // if the log in was unsuccessful
-      message.innerHTML = "el email o/y password son incorectos";
+      message.innerHTML = "Email and/or password are incorrect!";
     }
 
     this.messageContainer.appendChild(message);
@@ -50,6 +52,7 @@ class Login {
     if (user) this.redirect();
   };
 
+  // redirect the user to the dashboard page
   redirect = () => {
     setTimeout(() => location.assign("dashboard.html"), 2000);
   };

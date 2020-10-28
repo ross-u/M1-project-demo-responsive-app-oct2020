@@ -16,6 +16,8 @@ class Database {
     }
   };
 
+  // Save the newUser object in the localStorage, adding it to the array of users
+  // (we update the `users` stored in localStorage)
   saveNewUser = (newUser) => {
     // get the array of users saved in the localStorage
     const usersArr = this.getAllUsers();

@@ -79,6 +79,7 @@ class Signup {
     const password = this.passwordInput.value;
     const repeatPassword = this.repeatPasswordInput.value;
 
+    // Create the new user instance
     const newUser = new User(name, pokemon, type, email, password);
 
     // save the new user in the database (fake database :D )

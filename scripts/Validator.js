@@ -2,7 +2,7 @@
 
 class Validator {
   constructor() {
-    // predetermined (hard coded) error messages
+    // predetermined error messages
     this.invalidEmailError = "Intorduce un email válido";
     this.emailExistsError = "Este email ya está registrado";
     this.passwordError = "Introduce una contraseña de 6 o más carácteres";
