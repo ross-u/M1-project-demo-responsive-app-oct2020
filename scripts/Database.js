@@ -1,5 +1,4 @@
 "use strict";
-<<<<<<< HEAD
 
 class Database {
   // get the users array
@@ -37,5 +36,3 @@ class Database {
 const db = new Database();
 
 console.log("db", db);
-=======
->>>>>>> m1-prep-oct2020

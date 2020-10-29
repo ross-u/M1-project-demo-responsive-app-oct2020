@@ -1,5 +1,4 @@
 "use strict";
-<<<<<<< HEAD
 
 class Signup {
   constructor() {
@@ -129,7 +128,7 @@ class Signup {
     }
 
     const successMessageP = document.createElement("p");
-    successMessageP.innerHTML = "La cuenta ha sido creada con exito";
+    successMessageP.innerHTML = "User account was created successfully";
 
     this.errorsWrapper.appendChild(successMessageP);
   };
@@ -175,5 +174,3 @@ class Signup {
 const signup = new Signup();
 
 window.addEventListener("load", signup.addListeners);
-=======
->>>>>>> m1-prep-oct2020

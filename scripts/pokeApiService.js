@@ -1,5 +1,4 @@
 "use strict";
-<<<<<<< HEAD
 
 function getPokemons() {
   const section = document.querySelector(".pokemon-list");
@@ -35,5 +34,3 @@ function getPokemons() {
 }
 
 getPokemons();
-=======
->>>>>>> m1-prep-oct2020

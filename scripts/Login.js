@@ -1,5 +1,4 @@
 "use strict";
-<<<<<<< HEAD
 
 class Login {
   constructor() {
@@ -62,5 +61,3 @@ class Login {
 const login = new Login();
 
 login.loginButton.addEventListener("click", login.submit);
-=======
->>>>>>> m1-prep-oct2020
